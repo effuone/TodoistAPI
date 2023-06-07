@@ -4,7 +4,7 @@ import { allowCrossDomain } from "./middlewares";
 import taskRouter from "./routes/taskRouter";
 import projectRouter from "./routes/projectRouter";
 import swaggerDocs from "./swagger.js";
-const PORT = 5000
+const PORT = process.env.PORT || 5000
 const app = express();
 
 app.use(cors());
