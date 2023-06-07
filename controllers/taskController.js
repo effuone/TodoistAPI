@@ -11,20 +11,22 @@ class TaskController {
             });
             res.json(response.data)
         }catch(e){
-            console.log(e)
+            console.error('Error creating task:', error.response.data);
+            res.status(500).json({ error: 'Failed to get tasks' });
         }
     }
     async getTaskById(req,res){
         try{
-            let id = req.query.id;
-            const response = await axios.get(`${BASE_URL}?id=${id}`, {
+            let id = req.params.id;
+            const response = await axios.get(`${BASE_URL}/${id}`, {
                 headers: {
                   'Authorization': `Bearer ${TODOIST_TOKEN}`
                 }
               });
               res.json(response.data)
         }catch(e){
-            console.log(e)
+            console.error('Error creating task:', error.response.data);
+            res.status(500).json({ error: 'Failed to get task' });
         }
     }
     async createNewTask(req,res){
@@ -47,18 +49,41 @@ class TaskController {
           }        
     }
     async updateTask(req,res){
-        try{
-
-        }catch(e){
-            console.log(e)
-        }
+        try {
+            const { id } = req.params;
+            const { content, description, project_id } = req.body;
+            
+            const response = await axios.post(`${BASE_URL}/${id}`, {
+              content,
+              description,
+              project_id
+            }, {
+              headers: {
+                'Authorization': `Bearer ${TODOIST_TOKEN}`
+              }
+            });
+        
+            res.json(response.data);
+          } catch (error) {
+            console.error('Error updating task:', error.response.data);
+            res.status(500).json({ error: 'Failed to update task' });
+          }
     }
     async deleteTask(req,res){
-        try{
-
-        }catch(e){
-            console.log(e)
-        }
+        try {
+            const { id } = req.params;
+            
+            await axios.delete(`${BASE_URL}/${id}`, {
+              headers: {
+                'Authorization': `Bearer ${TODOIST_TOKEN}`
+              }
+            });
+        
+            res.sendStatus(204);
+          } catch (error) {
+            console.error('Error deleting task:', error.response.data);
+            res.status(500).json({ error: 'Failed to delete task' });
+          }
     }
 }
 

@@ -138,7 +138,7 @@ taskRouter.get('/tasks/:id', taskController.getTaskById);
 /**
  * @swagger
  * /api/tasks/{id}:
- *   put:
+ *   post:
  *     tags:
  *       - Tasks
  *     summary: Update a task
@@ -148,6 +148,7 @@ taskRouter.get('/tasks/:id', taskController.getTaskById);
  *         schema:
  *           type: string
  *         required: true
+ *         description: The ID of the task to update
  *     requestBody:
  *       required: true
  *       content:
@@ -155,17 +156,31 @@ taskRouter.get('/tasks/:id', taskController.getTaskById);
  *           schema:
  *             type: object
  *             properties:
- *               // Add your updated task properties here
+ *               content:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               project_id:
+ *                 type: string
+ *             example:
+ *               content: Finish my updated react project
+ *               description: Updated Todoist API integration
+ *               project_id: 2294060145
  *     responses:
  *       200:
- *         description: Updated
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 // Define your task properties here
  *       400:
  *         description: Bad request
- *       404:
- *         description: Not found
+ *       500:
+ *         description: Failed to update task
  */
-taskRouter.put('/tasks/:id', taskController.updateTask);
-
+taskRouter.post('/tasks/:id', taskController.updateTask);
 /**
  * @swagger
  * /api/tasks/{id}:
@@ -179,14 +194,16 @@ taskRouter.put('/tasks/:id', taskController.updateTask);
  *         schema:
  *           type: string
  *         required: true
+ *         description: The ID of the task to delete
  *     responses:
- *       200:
- *         description: Deleted
+ *       204:
+ *         description: Task successfully deleted
  *       400:
  *         description: Bad request
- *       404:
- *         description: Not found
+ *       500:
+ *         description: Failed to delete task
  */
+
 taskRouter.delete('/tasks/:id', taskController.deleteTask);
 
 export default taskRouter;
