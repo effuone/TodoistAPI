@@ -138,7 +138,7 @@ taskRouter.get('/tasks/:id', taskController.getTaskById);
 /**
  * @swagger
  * /api/tasks/{id}:
- *   post:
+ *   put:
  *     tags:
  *       - Tasks
  *     summary: Update a task
@@ -180,7 +180,7 @@ taskRouter.get('/tasks/:id', taskController.getTaskById);
  *       500:
  *         description: Failed to update task
  */
-taskRouter.post('/tasks/:id', taskController.updateTask);
+taskRouter.put('/tasks/:id', taskController.updateTask);
 /**
  * @swagger
  * /api/tasks/{id}:
