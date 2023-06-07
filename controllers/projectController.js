@@ -1,46 +1,44 @@
 import axios from "axios"
-import { BASE_PROJECTS_URL, TODOIST_TOKEN } from "../config";
-
 class ProjectController {
     async getAllProjects(req,res){
         try{
-            const response = await axios.get(BASE_PROJECTS_URL, {
+            const response = await axios.get('https://api.todoist.com/rest/v2/projects', {
               headers: {
-                'Authorization': `Bearer ${TODOIST_TOKEN}`
+                'Authorization': req.headers.authorization
               }
             });
             res.json(response.data)
         }catch(e){
-            console.error('Error getting project:', error.response.data);
+            console.error('Error getting project:', e.message);
             res.status(500).json({ error: 'Failed to get projects' });
         }
     }
     async getProjectById(req,res){
         try{
             let id = req.params.id;
-            const response = await axios.get(`${BASE_PROJECTS_URL}/${id}`, {
+            const response = await axios.get(`${'https://api.todoist.com/rest/v2/projects'}/${id}`, {
                 headers: {
-                  'Authorization': `Bearer ${TODOIST_TOKEN}`
+                  'Authorization': req.headers.authorization
                 }
               });
               res.json(response.data)
         }catch(e){
-            console.error('Error getting project:', error.response.data);
+            console.error('Error getting project:', e.message);
             res.status(500).json({ error: 'Failed to get project' });
         }
     }
     async createNewProject(req,res){
         try {
             const { name } = req.body;
-            const response = await axios.post(BASE_PROJECTS_URL, {name}, {
+            const response = await axios.post('https://api.todoist.com/rest/v2/projects', {name}, {
               headers: {
-                'Authorization': `Bearer ${TODOIST_TOKEN}`
+                'Authorization': req.headers.authorization
               }
             });
         
             res.json(response.data);
           } catch (error) {
-            console.error('Error creating project:', error.response.data);
+            console.error('Error creating project:', e.message);
             res.status(500).json({ error: 'Failed to create project' });
           }        
     }
@@ -49,15 +47,15 @@ class ProjectController {
             const { id } = req.params;
             const { name } = req.body;
             
-            const response = await axios.post(`${BASE_PROJECTS_URL}/${id}`, {name}, {
+            const response = await axios.post(`${'https://api.todoist.com/rest/v2/projects'}/${id}`, {name}, {
               headers: {
-                'Authorization': `Bearer ${TODOIST_TOKEN}`
+                'Authorization': req.headers.authorization
               }
             });
         
             res.json(response.data);
           } catch (error) {
-            console.error('Error updating project:', error.response.data);
+            console.error('Error updating project:', e.message);
             res.status(500).json({ error: 'Failed to update project' });
           }
     }
@@ -65,15 +63,15 @@ class ProjectController {
         try {
             const { id } = req.params;
             
-            await axios.delete(`${BASE_PROJECTS_URL}/${id}`, {
+            await axios.delete(`${'https://api.todoist.com/rest/v2/projects'}/${id}`, {
               headers: {
-                'Authorization': `Bearer ${TODOIST_TOKEN}`
+                'Authorization': req.headers.authorization
               }
             });
         
             res.sendStatus(204);
           } catch (error) {
-            console.error('Error deleting project:', error.response.data);
+            console.error('Error deleting project:', e.message);
             res.status(500).json({ error: 'Failed to delete project' });
           }
     }

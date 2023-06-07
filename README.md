@@ -10,19 +10,12 @@ Install the dependencies and start the server using npm
 git clone https://github.com/effuone/TodoistAPI/
 cd TodoistAPI/
 npm install
-touch .env
 ```
-
-To run this project, you will need to add the following environment variables to your .env file. Example is shown in `.env.example`
-
-`PORT=[YourToken]`
-`TODOIST_TOKEN=[YourToken]`
 
 Run project 
 ```sh
 npm start
 ```
-
 
 Check Swagger documentation for more information. Go to
 `
